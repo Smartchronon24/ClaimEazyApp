@@ -1,0 +1,83 @@
+# ========================
+# Android / Gradle
+# ========================
+
+# Build outputs
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+*.jar
+*.war
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local configuration (SDK path)
+local.properties
+
+# ========================
+# IDE
+# ========================
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Kotlin
+.kotlin/
+
+# VS Code
+.vscode/
+
+# ========================
+# Sensitive / Secret Files
+# ========================
+
+# Firebase config (contains API keys & project IDs)
+app/google-services.json
+
+# Signing keystores
+*.jks
+*.keystore
+keystore.properties
+
+# ========================
+# OS Generated
+# ========================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# ========================
+# Misc
+# ========================
+
+# Captures (Android Studio memory/CPU captures)
+captures/
+
+# External native build
+.cxx/
+.externalNativeBuild/
+
+# NDK
+obj/
+
+# Log files
+*.log

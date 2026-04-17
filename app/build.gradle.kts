@@ -4,7 +4,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
-    id("com.google.gms.google-services")
 
 }
 
@@ -53,7 +52,6 @@ android {
 }
 
 dependencies {
-    implementation("com.google.firebase:firebase-database:22.0.1")
     val composeBom = platform("androidx.compose:compose-bom:2024.03.00")
     implementation(composeBom)
     implementation("androidx.core:core-ktx:1.12.0")

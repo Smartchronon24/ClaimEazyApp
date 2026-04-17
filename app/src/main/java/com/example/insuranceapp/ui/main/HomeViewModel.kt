@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 import com.example.insuranceapp.data.repository.StatsRepository
-import kotlinx.coroutines.flow.collectLatest
 
 class HomeViewModel(
     private val repository: InsuranceRepository,
@@ -43,24 +42,8 @@ class HomeViewModel(
 
     init {
         fetchWelcomeMessage()
-        observeConnectionKey()
-    }
-
-    private fun observeConnectionKey() {
-        viewModelScope.launch {
-            statsRepository.getConnectionKey().collectLatest { rawKey ->
-                if (!rawKey.isNullOrBlank()) {
-                    val parsedKey = parseNgrokKey(rawKey)
-                    val currentKey = com.example.insuranceapp.data.api.RetrofitClient.getNgrokKey()
-                    
-                    if (parsedKey != currentKey) {
-                        com.example.insuranceapp.data.api.RetrofitClient.updateNgrokKey(parsedKey)
-                        _connectionKey.value = parsedKey
-                        fetchWelcomeMessage(isManualUpdate = true)
-                    }
-                }
-            }
-        }
+        // F-Droid build: Connection key is managed manually via HomeScreen UI.
+        // Firebase auto-sync has been removed for FOSS compliance.
     }
 
     private fun parseNgrokKey(input: String): String {
@@ -75,6 +58,7 @@ class HomeViewModel(
 
     fun updateConnectionKey(key: String) {
         com.example.insuranceapp.data.api.RetrofitClient.updateNgrokKey(key)
+        _connectionKey.value = key
         fetchWelcomeMessage(isManualUpdate = true)
     }
 

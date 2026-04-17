@@ -39,9 +39,6 @@ local.properties
 # Sensitive / Secret Files
 # ========================
 
-# Firebase config (contains API keys & project IDs)
-app/google-services.json
-
 # Signing keystores
 *.jks
 *.keystore

@@ -239,15 +239,18 @@ fun DashboardScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
+                    val canViewStats = viewModel.appRole == com.example.insuranceapp.data.model.AppRole.ADMIN || 
+                                     viewModel.appRole == com.example.insuranceapp.data.model.AppRole.ETL
+                    
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         DashboardActionCard(
                             modifier = Modifier.weight(1f),
-                            title = "Quick Stats",
-                            subtitle = "Overview at a glance",
-                            icon = Icons.Default.BarChart,
+                            title = if (canViewStats) "Quick Stats" else "Your Info",
+                            subtitle = if (canViewStats) "Overview at a glance" else "Insights & records",
+                            icon = if (canViewStats) Icons.Default.BarChart else Icons.Default.PersonSearch,
                             gradient = SuccessGradient,
                             onClick = { center -> 
                                 actionCenter = center
@@ -256,6 +259,7 @@ fun DashboardScreen(
                             },
                             isPrimary = false
                         )
+                        
                         DashboardActionCard(
                             modifier = Modifier.weight(1f),
                             title = "Reports",

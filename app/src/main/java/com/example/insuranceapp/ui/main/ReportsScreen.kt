@@ -19,9 +19,14 @@ import com.example.insuranceapp.ui.theme.PrimaryGradientLight
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReportsScreen(
+    userViewModel: com.example.insuranceapp.ui.users.UserAccountViewModel,
     isDark: Boolean,
     onBack: () -> Unit
 ) {
+    val appRole = userViewModel.appRole
+    val isRestricted = appRole == com.example.insuranceapp.data.model.AppRole.CLIENT || 
+                       appRole == com.example.insuranceapp.data.model.AppRole.APPROVER
+
     val backgroundGradient = if (isDark) BackgroundGradientDark else BackgroundGradientLight
     val primaryGradient = if (isDark) PrimaryGradientDark else PrimaryGradientLight
 
@@ -58,11 +63,30 @@ fun ReportsScreen(
                     .padding(padding),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "Reports Content Here",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+                if (isRestricted) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = "No reports available",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "You will receive an update here once reports are generated for your account.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = 32.dp),
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                        )
+                    }
+                } else {
+                    Text(
+                        text = "Reports Content Here",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
             }
         }
     }

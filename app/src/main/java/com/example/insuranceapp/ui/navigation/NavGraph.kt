@@ -297,6 +297,7 @@ fun NavGraph(
         composable(Screen.QuickStats.route) {
             QuickStatsScreen(
                 viewModel = quickStatsViewModel,
+                userViewModel = userViewModel,
                 isDark = isDark,
                 onBack = { navController.popBackStack() }
             )
@@ -304,6 +305,7 @@ fun NavGraph(
 
         composable(Screen.Reports.route) {
             ReportsScreen(
+                userViewModel = userViewModel,
                 isDark = isDark,
                 onBack = { navController.popBackStack() }
             )

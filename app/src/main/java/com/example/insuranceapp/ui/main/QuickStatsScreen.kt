@@ -40,6 +40,7 @@ import com.example.insuranceapp.ui.theme.*
 @Composable
 fun QuickStatsScreen(
     viewModel: QuickStatsViewModel,
+    userViewModel: com.example.insuranceapp.ui.users.UserAccountViewModel,
     isDark: Boolean,
     onBack: () -> Unit
 ) {
@@ -47,6 +48,8 @@ fun QuickStatsScreen(
     val backgroundGradient = if (isDark) BackgroundGradientDark else BackgroundGradientLight
     val primaryGradient = if (isDark) PrimaryGradientDark else PrimaryGradientLight
     val view = LocalView.current
+    val appRole = userViewModel.appRole
+    val isRestricted = appRole == AppRole.CLIENT || appRole == AppRole.APPROVER
 
     var selectedDetailType by remember { mutableStateOf<StatDetailType?>(null) }
     val sheetState = rememberModalBottomSheetState()
@@ -113,8 +116,9 @@ fun QuickStatsScreen(
                             }
                             Spacer(modifier = Modifier.width(12.dp))
                             Column {
+                                val headerTitle = if (appRole == AppRole.ADMIN || appRole == AppRole.ETL) "Quick Stats" else "Your Info"
                                 Text(
-                                    text = "Quick Stats",
+                                    text = headerTitle,
                                     style = MaterialTheme.typography.headlineLarge.copy(
                                         fontSize = 32.sp,
                                         shadow = androidx.compose.ui.graphics.Shadow(
@@ -165,19 +169,54 @@ fun QuickStatsScreen(
                 }
             }
         ) { padding ->
-            when (val state = uiState) {
-                is QuickStatsUiState.Loading -> LoadingScreen(modifier = Modifier.padding(padding))
-                is QuickStatsUiState.Error -> ErrorScreen(
-                    message = state.message,
-                    onRetry = { /* viewModel.fetchStats() handles this in init but could be exposed */ },
-                    modifier = Modifier.padding(padding)
-                )
-                is QuickStatsUiState.Success -> {
-                    QuickStatsContent(
-                        insights = state.insights,
-                        modifier = Modifier.padding(padding),
-                        onDetailClick = { selectedDetailType = it }
+            if (isRestricted) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            Icons.Default.Lock,
+                            contentDescription = null,
+                            modifier = Modifier.size(64.dp),
+                            tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Access Restricted",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Text(
+                            text = if (appRole == AppRole.APPROVER) 
+                                "This dashboard is reserved for Admin & ETL users."
+                            else 
+                                "Personal insights and records will appear here as the system collects more data.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = 32.dp),
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                        )
+                    }
+                }
+            } else {
+                when (val state = uiState) {
+                    is QuickStatsUiState.Loading -> LoadingScreen(modifier = Modifier.padding(padding))
+                    is QuickStatsUiState.Error -> ErrorScreen(
+                        message = state.message,
+                        onRetry = { /* viewModel.fetchStats() */ },
+                        modifier = Modifier.padding(padding)
                     )
+                    is QuickStatsUiState.Success -> {
+                        QuickStatsContent(
+                            insights = state.insights,
+                            modifier = Modifier.padding(padding),
+                            onDetailClick = { selectedDetailType = it }
+                        )
+                    }
                 }
             }
         }

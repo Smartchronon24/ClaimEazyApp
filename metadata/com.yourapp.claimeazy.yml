@@ -1,1 +1,29 @@
+Categories:
+  - Finance
 
+License: MIT
+
+AuthorName: Navaneth
+AuthorEmail: your@email.com
+
+SourceCode: https://github.com/yourusername/yourrepo
+
+IssueTracker: https://github.com/yourusername/yourrepo/issues
+
+AutoName: ClaimEazy
+
+Summary: Insurance claim management app
+
+Description: |
+  ClaimEazy helps users manage insurance claims, customers, and policies.
+
+RepoType: git
+Repo: https://github.com/yourusername/yourrepo.git
+
+Builds:
+  - versionName: 1.0
+    versionCode: 1
+    commit: v1.0
+    subdir: app
+    gradle:
+      - yes

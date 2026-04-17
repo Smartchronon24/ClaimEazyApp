@@ -4,11 +4,11 @@ Categories:
 License: MIT
 
 AuthorName: Navaneth
-AuthorEmail: your@email.com
+AuthorEmail: navaneth@gmail.com
 
-SourceCode: https://github.com/yourusername/yourrepo
+SourceCode: https://github.com/Smartchronon24/ClaimEazyApp/tree/fdroid
 
-IssueTracker: https://github.com/yourusername/yourrepo/issues
+IssueTracker: https://github.com/Smartchronon24/ClaimEazyApp/issues
 
 AutoName: ClaimEazy
 
@@ -18,7 +18,7 @@ Description: |
   ClaimEazy helps users manage insurance claims, customers, and policies.
 
 RepoType: git
-Repo: https://github.com/yourusername/yourrepo.git
+Repo: https://github.com/Smartchronon24/ClaimEazyApp.git
 
 Builds:
   - versionName: 1.0
